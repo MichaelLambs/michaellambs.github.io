@@ -3,10 +3,6 @@
   padding-right: .5rem;
 }
 
-* {
-  outline: 1px solid red;
-}
-
 h1 {
   font-family: "Rajdhani", sans-serif;
   font-size: 2.5em;
@@ -45,7 +41,7 @@ body {
 /*******************Top Section*******************/
 header {
   height: 100vh;
-  background: url("/assets/img/cover-image.jpg") center center;
+  background: url("/assets/img/cover-image-2.jpg") center center;
   background-size: cover;
   color: #f1f1f1;
 }
@@ -64,14 +60,26 @@ header h1 {
   right: 0;
   position: absolute;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   background: url("/assets/img/bg-pattern.png") center center;
 }
 
-.orange-box {
-  /*background-image: url('')*/
-  border-radius: 15px;
-  background-size: cover;
+.intro-box {
+  padding-bottom: 3rem;
+}
+
+.header-icons {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+}
+
+.header-icons a {
+  color: #ff7314;
+}
+
+.header-icons a:hover {
+  color: #ffb07a;
 }
 
 /********************Main Section************************/
@@ -87,7 +95,12 @@ header h1 {
 }
 
 .education-chunk {
-  border-bottom: 15px solid #eaeaea;
+  border-bottom: 5px solid #ff7314;
+  margin-bottom: 1rem;
+}
+
+.education-highlight {
+  border-bottom: 10px solid #ff7314;
   margin-bottom: 1rem;
 }
 
@@ -103,7 +116,7 @@ header h1 {
 
 /********************Skills Box********************/
 .skills-section {
-  background: #c4771e;
+  background-image: url("/assets/img/circles-pattern.png");
 }
 
 .skills-section h1 {
@@ -157,5 +170,11 @@ header h1 {
   }
   .skills-box {
     flex-basis: 70%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .left-sidebar {
+    padding-bottom: 3rem;
   }
 }

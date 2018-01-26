@@ -1,15 +1,17 @@
 /*******************Helpers*******************/
 
 $white: #f1f1f1
-$orange: rgb(196, 119, 30)
+$orange: #ff7314
+$edu-color: #ff7314
+$work-color: #6caedf
+
 $font-headings: 'Rajdhani', sans-serif
 $font-p: 'Ovo', serif;
 
 .pad-r
     padding-right: .5rem
 
-*
-    outline: 1px solid red
+
 
 h1
     font-family: $font-headings
@@ -42,7 +44,7 @@ body
 
 header
     height: 100vh
-    background: url('/assets/img/cover-image.jpg') center center
+    background: url('/assets/img/cover-image-2.jpg') center center
     background-size: cover
     color: $white
     & h1
@@ -58,13 +60,20 @@ header
     right: 0
     position: absolute
     display: flex
-    align-items: center
+    align-items: flex-end
     background: url('/assets/img/bg-pattern.png') center center
 
-.orange-box
-    /*background-image: url('')*/
-    border-radius: 15px
-    background-size: cover
+.intro-box
+    padding-bottom: 3rem
+
+.header-icons
+    display: flex
+    justify-content: space-between
+    font-size: 1.5rem
+    & a
+        color: $orange
+    & a:hover
+        color: lighten($orange, 20)
 
 /********************Main Section************************/
 
@@ -78,21 +87,25 @@ header
     margin: 1rem auto
 
 .education-chunk
-    border-bottom: 15px solid #eaeaea
+    border-bottom: 5px solid $edu-color
+    margin-bottom: 1rem
+
+.education-highlight
+    border-bottom: 10px solid $edu-color
     margin-bottom: 1rem
 
 .wrk-history-chunk
-    border-bottom: 5px solid #6caedf
+    border-bottom: 5px solid $work-color
     margin-bottom: 1rem
 
 .work-highlight
-    border-bottom: 10px solid #6caedf
+    border-bottom: 10px solid $work-color
     margin-bottom: 1rem
 
 /********************Skills Box********************/
 
 .skills-section
-    background: $orange
+    background-image: url('/assets/img/circles-pattern.png')
     & h1
         font-family: $font-headings
         font-size: 3em
@@ -140,3 +153,7 @@ header
     
     &.skills-box
         flex-basis: 70%
+
+@media screen and (max-width: 576px)
+    .left-sidebar
+        padding-bottom: 3rem

@@ -4,6 +4,7 @@ $white: #f1f1f1
 $orange: #ff7314
 $edu-color: #ff7314
 $work-color: #6caedf
+$purple: #b570ae
 
 $font-headings: 'Rajdhani', sans-serif
 $font-p: 'Ovo', serif;
@@ -125,6 +126,36 @@ header
     font-size: 5rem
     flex-basis: 40%
     text-align: center
+
+/*********************Projects Section*****************************/
+
+.projects-section
+    background: $purple
+
+.projects-holder
+    padding: 5rem 2rem
+    & h1
+        font-size: 3em
+
+.projects-title
+    text-align: center
+    padding-bottom: 1em
+
+.projects-box
+    display: flex
+    justify-content: space-around
+    flex-wrap: wrap
+
+.projects
+    margin: 1rem
+    flex-basis: 20%
+    text-align: center
+    & p
+        text-align: left
+
+.purp-shadow
+    box-shadow: 0 0 21px 7px darken($purple, 5)
+    margin-bottom: 1rem
 
 /********************Contact Section********************/
    

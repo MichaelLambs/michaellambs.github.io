@@ -143,6 +143,45 @@ header h1 {
   text-align: center;
 }
 
+/*********************Projects Section*****************************/
+.projects-section {
+  background: #b570ae;
+}
+
+.projects-holder {
+  padding: 5rem 2rem;
+}
+
+.projects-holder h1 {
+  font-size: 3em;
+}
+
+.projects-title {
+  text-align: center;
+  padding-bottom: 1em;
+}
+
+.projects-box {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.projects {
+  margin: 1rem;
+  flex-basis: 20%;
+  text-align: center;
+}
+
+.projects p {
+  text-align: left;
+}
+
+.purp-shadow {
+  box-shadow: 0 0 21px 7px #ac5fa4;
+  margin-bottom: 1rem;
+}
+
 /********************Contact Section********************/
 .contact-section {
   background: #333;

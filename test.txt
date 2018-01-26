@@ -1,0 +1,13 @@
+div whatever
+.container
+.row
+col-12
+col-4
+c0l4
+col-4
+
+
+.whatver {
+    margin: 10rem 0;
+
+}

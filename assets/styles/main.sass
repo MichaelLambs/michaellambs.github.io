@@ -12,8 +12,6 @@ $font-p: 'Ovo', serif;
 .pad-r
     padding-right: .5rem
 
-
-
 h1
     font-family: $font-headings
     font-size: 2.5em
@@ -45,7 +43,7 @@ body
 
 header
     height: 100vh
-    background: url('/assets/img/cover-image-2.jpg') center center
+    background: url('/assets/img/cover-image-2.jpg') center bottom
     background-size: cover
     color: $white
     & h1
@@ -66,6 +64,8 @@ header
 
 .intro-box
     padding-bottom: 3rem
+    & h1
+        margin-bottom: 0
 
 .header-icons
     display: flex
@@ -89,11 +89,17 @@ header
 
 .education-chunk
     border-bottom: 5px solid $edu-color
-    margin-bottom: 1rem
 
 .education-highlight
     border-bottom: 10px solid $edu-color
     margin-bottom: 1rem
+
+.arrow
+    margin-bottom: 1rem
+    text-align: center
+    margin-top: -3px
+    & img
+        vertical-align: top
 
 .wrk-history-chunk
     border-bottom: 5px solid $work-color
@@ -170,6 +176,12 @@ header
     right: 0
     background: url('/assets/img/bg-pattern-2.png') center center
     padding: 2rem 0
+
+/*******************Footer****************************/
+
+.footy
+    height: 15vh
+    background-size: cover
 
 /********************Media Queries********************/
 

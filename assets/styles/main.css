@@ -61,7 +61,7 @@ header h1 {
   position: absolute;
   display: flex;
   align-items: flex-end;
-  background: url("/assets/img/bg-pattern.png") center center;
+  background: url("/assets/img/bg-pattern-4.png") center center;
 }
 
 .intro-box {
@@ -125,6 +125,31 @@ header h1 {
 .work-highlight {
   border-bottom: 10px solid #6caedf;
   margin-bottom: 1rem;
+}
+
+.teal {
+  border-bottom: 5px solid #65949c;
+  margin-bottom: 1rem;
+}
+
+.hobby-holder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hobbies {
+  margin: .25rem;
+  flex-basis: 40%;
+}
+
+.hobby-images {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid #3d595e;
+  border-radius: 10px;
+  padding: .5rem;
+  background-color: #65949c;
 }
 
 /********************Skills Box********************/
@@ -234,5 +259,8 @@ header h1 {
 @media screen and (max-width: 576px) {
   .left-sidebar {
     padding-bottom: 3rem;
+  }
+  .hobbies {
+    flex-basis: 10%;
   }
 }

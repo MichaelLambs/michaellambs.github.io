@@ -2,10 +2,10 @@
 
 $white: #f1f1f1
 $orange: #ff7314
-$edu-color: #ff7314
-$work-color: #6caedf
+$blue: #6caedf
 $purple: #b570ae
 $teal: #65949c
+$black: #333
 
 $font-headings: 'Rajdhani', sans-serif
 $font-p: 'Ovo', serif;
@@ -44,7 +44,7 @@ body
 
 header
     height: 100vh
-    background: url('/assets/img/cover-image-3.jpg') center bottom
+    background: url('/assets/img/cover-image-4.jpg') center center
     background-size: cover
     color: $white
     & h1
@@ -81,6 +81,7 @@ header
 
 .main-section
     padding: 5rem 0
+    color: $black
 
 .circle
     border-radius: 100%
@@ -89,10 +90,10 @@ header
     margin: 1rem auto
 
 .education-chunk
-    border-bottom: 5px solid $edu-color
+    border-bottom: 5px solid $orange
 
 .education-highlight
-    border-bottom: 10px solid $edu-color
+    border-bottom: 10px solid $orange
     margin-bottom: 1rem
 
 .arrow
@@ -103,11 +104,11 @@ header
         vertical-align: top
 
 .wrk-history-chunk
-    border-bottom: 5px solid $work-color
+    border-bottom: 5px solid $blue
     margin-bottom: 1rem
 
 .work-highlight
-    border-bottom: 10px solid $work-color
+    border-bottom: 10px solid $blue
     margin-bottom: 1rem
 
 .teal
@@ -159,6 +160,7 @@ header
 
 .projects-section
     background: $purple
+    color: $black
 
 .projects-holder
     padding: 5rem 2rem
@@ -188,7 +190,7 @@ header
 /********************Contact Section********************/
    
 .contact-section
-    background: #333
+    background: $black
     color: $white
 
 .contact-shade
@@ -196,14 +198,21 @@ header
     bottom: 0
     left: 0
     right: 0
-    background: url('/assets/img/bg-pattern-2.png') center center
+    background: url('/assets/img/circles-pattern.png') center center
     padding: 2rem 0
+    
+#contacto
+    text-align: center
+    font-size: 3em
 
 /*******************Footer****************************/
 
 .footy
-    height: 15vh
+    
     background-size: cover
+
+.footy-pad
+    padding: 2rem 0
 
 /********************Media Queries********************/
 
@@ -225,5 +234,8 @@ header
 
     .hobbies
         flex-basis: 10%
+
+    .sidebar-navi
+        margin: 0 4em
 
     

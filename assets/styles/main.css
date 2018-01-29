@@ -41,7 +41,7 @@ body {
 /*******************Top Section*******************/
 header {
   height: 100vh;
-  background: url("/assets/img/cover-image-3.jpg") center bottom;
+  background: url("/assets/img/cover-image-4.jpg") center center;
   background-size: cover;
   color: #f1f1f1;
 }
@@ -89,6 +89,7 @@ header h1 {
 /********************Main Section************************/
 .main-section {
   padding: 5rem 0;
+  color: #333;
 }
 
 .circle {
@@ -184,6 +185,7 @@ header h1 {
 /*********************Projects Section*****************************/
 .projects-section {
   background: #b570ae;
+  color: #333;
 }
 
 .projects-holder {
@@ -231,14 +233,22 @@ header h1 {
   bottom: 0;
   left: 0;
   right: 0;
-  background: url("/assets/img/bg-pattern-2.png") center center;
+  background: url("/assets/img/circles-pattern.png") center center;
   padding: 2rem 0;
+}
+
+#contacto {
+  text-align: center;
+  font-size: 3em;
 }
 
 /*******************Footer****************************/
 .footy {
-  height: 15vh;
   background-size: cover;
+}
+
+.footy-pad {
+  padding: 2rem 0;
 }
 
 /********************Media Queries********************/
@@ -262,5 +272,8 @@ header h1 {
   }
   .hobbies {
     flex-basis: 10%;
+  }
+  .sidebar-navi {
+    margin: 0 4em;
   }
 }

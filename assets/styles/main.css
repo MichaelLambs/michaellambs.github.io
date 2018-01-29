@@ -41,7 +41,7 @@ body {
 /*******************Top Section*******************/
 header {
   height: 100vh;
-  background: url("/assets/img/cover-image-2.jpg") center bottom;
+  background: url("/assets/img/cover-image-3.jpg") center bottom;
   background-size: cover;
   color: #f1f1f1;
 }
@@ -61,7 +61,7 @@ header h1 {
   position: absolute;
   display: flex;
   align-items: flex-end;
-  background: url("/assets/img/bg-pattern-4.png") center center;
+  /*background: url('/assets/img/bg-pattern-4.png') center center*/
 }
 
 .intro-box {
@@ -146,7 +146,6 @@ header h1 {
 .hobby-images {
   width: 3.5rem;
   height: 3.5rem;
-  border: 1px solid #3d595e;
   border-radius: 10px;
   padding: .5rem;
   background-color: #65949c;
@@ -154,7 +153,8 @@ header h1 {
 
 /********************Skills Box********************/
 .skills-section {
-  background-image: url("/assets/img/circles-pattern.png");
+  background-image: url("/assets/img/circles-pattern-d.png");
+  color: #ff7314;
 }
 
 .skills-section h1 {

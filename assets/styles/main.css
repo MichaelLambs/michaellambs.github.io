@@ -247,6 +247,11 @@ header h1 {
   font-size: 3em;
 }
 
+.form-group label {
+  font-weight: 700;
+  font-family: "Rajdhani", sans-serif;
+}
+
 /*******************Footer****************************/
 .footy {
   background-size: cover;

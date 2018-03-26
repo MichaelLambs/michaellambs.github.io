@@ -1,14 +1,34 @@
 /*******************Helpers*******************/
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.smaller {
+  font-size: .8rem;
+  text-align: right;
+  padding-top: .5rem;
+}
+
 .highlight {
   background-color: #fffbcc;
-  border-left: solid #d1cc96 5px;
-  padding: .6rem .4rem .4rem .4rem;
+  border-left: solid #d1cc96 8px;
+  padding: .6rem;
   font-size: .9rem;
   text-align: left;
+  margin: 0 .5rem;
 }
 
 .highlight p {
   margin-bottom: 0;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .pad-r {
@@ -48,6 +68,13 @@ p {
 body {
   font-family: "Ovo", serif;
   size: 1rem;
+}
+
+.orange-img {
+  height: 5rem;
+  width: 5rem;
+  display: inherit;
+  padding-left: .25rem;
 }
 
 /*******************Top Section*******************/
@@ -147,7 +174,7 @@ header h1 {
 }
 
 .teal {
-  border-bottom: 5px solid #65949c;
+  border-bottom: 5px solid #333;
   margin-bottom: 1rem;
 }
 
@@ -157,17 +184,26 @@ header h1 {
   justify-content: center;
 }
 
+#hob-info {
+  transition: all .3s linear;
+}
+
 .hobbies {
   margin: .25rem;
   flex-basis: 40%;
 }
 
 .hobby-images {
+  transition: all .3s linear;
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 10px;
   padding: .5rem;
-  background-color: #65949c;
+  background-color: #333;
+}
+
+.hobby-images:hover {
+  background-color: #ff7314;
 }
 
 /********************Skills Box********************/
@@ -202,6 +238,12 @@ header h1 {
   font-size: 5rem;
   flex-basis: 40%;
   text-align: center;
+}
+
+.flexor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /*********************Projects Section*****************************/

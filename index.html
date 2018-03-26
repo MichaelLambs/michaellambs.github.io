@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Michael Lamb Resume</title>
+    <title>Michael Lamb | Full Stack Developer in Boise, Idaho</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -32,13 +32,13 @@
                                     </h4>
                                 </div>
                                 <div class="text-center col-md-4 col-sm-5 col-6 header-icons">
-                                    <a href="https://github.com/MichaelLambs">
+                                    <a href="https://github.com/MichaelLambs" target="_blank">
                                         <i class="fab fa-github" aria-hidden="true"></i>
                                     </a>
-                                    <a href="https://github.com/MichaelLambs">
+                                    <a href="https://www.linkedin.com/in/michael-lamb-763bb553/" target="_blank">
                                         <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                                     </a>
-                                    <a href="http://chetos.com">
+                                    <a href="./assets/img/Michael-Lamb-Resume-2018.pdf" target="_blank">
                                         <i class="fas fa-file-pdf" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -61,50 +61,59 @@
                                 <h4 class="card-title">About Me</h4>
                                 <div class="highlight">
                                     <p class="card-text">"Either write something worth reading or do something worth writing."</p>
-                                    <p>- Benjamin Franklin</p>
+                                    <p class="smaller">-
+                                        <em>Benjamin Franklin</em>
+                                    </p>
                                 </div>
                             </div>
                             <ul class="list-group list-group-flush sidebar-navi">
                                 <li class="list-group-item">
-                                    <button class="btn btn-success btn-block">
-                                        <i class="fab fa-telegram-plane pad-r"></i>Contact
-                                    </button>
+                                    <a href="#contact">
+                                        <button class="btn btn-success btn-block">
+                                            <i class="fab fa-telegram-plane pad-r"></i>Contact
+                                        </button>
+                                    </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <button class="btn btn-danger btn-block">
-                                        <i class="fas fa-tree pad-r"></i>Skills
-                                    </button>
+                                    <a href="#skills">
+                                        <button class="btn btn-danger btn-block">
+                                            <i class="fas fa-tree pad-r"></i>Skills
+                                        </button>
+                                    </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <button class="btn btn-warning btn-block">
-                                        <i class="fas fa-folder-open pad-r"></i>Projects
-                                    </button>
+                                    <a href="#flock">
+                                        <button class="btn btn-warning btn-block">
+                                            <i class="fas fa-folder-open pad-r"></i>Projects
+                                        </button>
+                                    </a>
                                 </li>
                             </ul>
-                            <div class="card-body hide">
+                            <div class="card-body">
                                 <h4 class="teal">Fun Facts</h4>
-                                <div class="hobby-holder">
-                                    <div class="hobbies">
+                                <div id="hob-info"></div>
+                                <div class="hobby-holder" id="spanish">
+                                    <div onclick="showDeets(1)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-spanish.png">
                                         <h5>Spanish</h5>
                                     </div>
-                                    <div class="hobbies">
+                                    <div onclick="showDeets(2)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-beaver-football.png">
                                         <h5>Pac-12 Football</h5>
                                     </div>
-                                    <div class="hobbies">
+                                    <div onclick="showDeets(3)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-tap-dance.png">
                                         <h5>Tap Dancing</h5>
                                     </div>
-                                    <div class="hobbies">
+                                    <div onclick="showDeets(4)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-travel.png">
                                         <h5>Traveling</h5>
                                     </div>
-                                    <div class="hobbies">
-                                        <img class="hobby-images" src="/assets/img/michael-lamb-beaver-football.png">
+                                    <div onclick="showDeets(5)" class="hobbies pointer">
+                                        <img class="hobby-images" src="/assets/img/michael-lamb-volunteer.png">
                                         <h5>Volunteer</h5>
                                     </div>
-                                    <div class="hobbies">
+                                    <div onclick="showDeets(6)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-favorite-song.png">
                                         <h5>Rocket Man</h5>
                                     </div>
@@ -125,7 +134,7 @@
                                 <em>Boise, Idaho</em>
                             </h4>
                             <p>A coding bootcamp with concentration in HTML, CSS, Javascript, Vue, & C#.</p>
-                        
+
                         </div>
                         <div class="arrow orange"></div>
                         <div class="wrk-history-chunk">
@@ -175,44 +184,82 @@
     </section>
 
     <section class="skills-section">
-        <div class="skills-holder">
+        <div class="skills-holder" id="skills">
             <div class="skills-title">
                 <h1>Herding Equipment:</h1>
             </div>
             <div class="skills-box">
-                <span class="devicons devicons-javascript"></span>
-                <span class="devicons devicons-nodejs"></span>
-                <span class="devicons devicons-bootstrap"></span>
-                <span class="devicons devicons-sass"></span>
-                <span class="devicons devicons-css3"></span>
-                <span class="devicons devicons-html5"></span>
-                <span class="devicons devicons-wordpress"></span>
-                <span class="devicons devicons-npm"></span>
-                <span class="devicons devicons-photoshop"></span>
-                <span class="devicons devicons-illustrator"></span>
-                <i class="fab fa-vuejs"></i>
+                <div class="flexor">
+                    <div>
+                        <i class="devicons devicons-javascript"></i>
+                    </div>
+                    <div>
+                        <i class="devicons devicons-nodejs"></i>
+                    </div>
+                    <div>
+                        <i class="devicons devicons-bootstrap"></i>
+                    </div>
+                    <div>
+                        <i class="devicons devicons-sass"></i>
+                    </div>
+                    <div>
+                        <i class="devicons devicons-css3"></i>
+                    </div>
+                    <div>
+                        <i class="devicons devicons-html5"></i>
+                    </div>
+                    <div>
+                        <i class="devicons devicons-wordpress"></i>
+                    </div>
+                    <div>
+                        <i class="devicons devicons-npm"></i>
+                    </div>
+                    <div>
+                        <i class="fab fa-vuejs"></i>
+                    </div>
+                    <div>
+                        <img class="orange-img" src="./assets/img/icons8-c-sharp-logo-filled.svg">
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="projects-section">
-        <div class="projects-holder">
+        <div class="projects-holder" id="flock">
             <div class="projects-title">
                 <h1>My Flock</h1>
             </div>
             <div class="projects-box">
                 <div class="projects">
-                    <a href="https://port-vue-kan-ban.herokuapp.com/#/login"><img class="purp-shadow" src="./assets/img/all-aBoard-logo.png" heght="200" width="200" alt=""></a>
+                    <a href="https://port-vue-kan-ban.herokuapp.com/#/login" target="_blank">
+                        <img class="purp-shadow" src="./assets/img/all-aBoard-logo.png" heght="200" width="200" alt="">
+                    </a>
                     <h4>All aBoard</h4>
-                    <p>This project was created using Vue, MongoDB, and Bootstrap. It is a bulletin app, like Trello, where a user can create boards, lists, tasks, and comments.
+                    <p>This project was created using Vue, MongoDB, and Bootstrap. It is a bulletin app, like Trello, where
+                        a user can create boards, lists, tasks, and comments.
                     </p>
                     <div class="project-info">
-                        <p><a href="https://port-vue-kan-ban.herokuapp.com/#/login">Check it out!</a></p>
+                        <p>
+                            <a href="https://port-vue-kan-ban.herokuapp.com/#/login" target="_blank">Check it out</a>
+                        </p>
                         <p>Test Email: test@test.com</p>
                         <p>Test Password: test123</p>
                     </div>
                 </div>
                 <div class="projects">
+                    <a href="https://meetme-at.herokuapp.com/#/meet-friend" target="_blank">
+                        <img class="purp-shadow" src="./assets/img/meet-me-logo.png" height="200" width="200">
+                    </a>
+                    <h4>MeetMe@</h4>
+                    <p>MeetMe@ is a app that allows users to find a midpoint between two locations. At that midpoint users are
+                        able to search, via the Google API, resturants, coffee shops, etc.
+                    </p>
+                    <p>
+                        <a href="https://meetme-at.herokuapp.com/#/meet-friend" target="_blank">Check it out</a>
+                    </p>
+                </div>
+                <!-- <div class="projects">
                     <img class="purp-shadow" src="http://placehold.it/200x200" alt="">
                     <h4>Sweet Project</h4>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur, dolorem. Similique ad soluta aut
@@ -225,20 +272,13 @@
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur, dolorem. Similique ad soluta aut
                         libero.
                     </p>
-                </div>
-                <div class="projects">
-                    <img class="purp-shadow" src="http://placehold.it/200x200" alt="">
-                    <h4>Sweet Project</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur, dolorem. Similique ad soluta aut
-                        libero.
-                    </p>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
 
     <section class="contact-section">
-        <div class="contact-shade">
+        <div class="contact-shade" id="contact">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 col-sm-8 col-10">
@@ -290,6 +330,7 @@
         </div>
     </footer>
 
+    <script src="./app/app.js"></script>
 </body>
 
 </html>

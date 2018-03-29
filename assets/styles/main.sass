@@ -111,6 +111,13 @@ header
     padding: 5rem 0
     color: $black
 
+.orange-btn
+    background-color: $orange
+    color: white
+    transition: all .3s linear
+    &:hover
+        background-color: darken($orange, 10)
+
 .circle
     border-radius: 100%
     height: 125px
@@ -207,7 +214,10 @@ header
 /*********************Projects Section*****************************/
 
 .projects-section
-    background: $purple
+    background-image: url('/assets/img/flock-projects.jpg')
+    background-size: cover
+    background-position: top
+    // background-attachment: fixed
     color: $black
 
 .project-info
@@ -227,16 +237,24 @@ header
     display: flex
     justify-content: space-around
     flex-wrap: wrap
+    & h4
+        font-size: 1.75rem
+        font-weight: 700
+    & a
+        font-weight: 700
+        color: $orange
+        &:hover
+            color: darken($orange, 10)
 
 .projects
     margin: 1rem
-    flex-basis: 20%
+    flex-basis: 40%
     text-align: center
     & p
         text-align: left
 
 .purp-shadow
-    box-shadow: 0 0 21px 7px darken($purple, 5)
+    box-shadow: 0 0 21px 1px #b8b8b8
     margin-bottom: 1rem
 
 /********************Contact Section********************/

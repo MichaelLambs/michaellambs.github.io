@@ -131,6 +131,11 @@ header h1 {
   color: #333;
 }
 
+.flexor-2 {
+  display: flex;
+  align-items: center;
+}
+
 .orange-btn {
   background-color: #ff7314;
   color: white;

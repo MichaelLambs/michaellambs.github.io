@@ -8,6 +8,10 @@ a:hover {
   text-decoration: none;
 }
 
+li a {
+  color: #ff7314;
+}
+
 .smaller {
   font-size: .8rem;
   text-align: right;
@@ -62,7 +66,11 @@ h5 {
 
 p {
   font-family: "Ovo", serif;
-  size: 1rem;
+  font-size: 1.1rem;
+}
+
+li {
+  font-size: 1.1rem;
 }
 
 body {
@@ -137,13 +145,13 @@ header h1 {
 }
 
 .orange-btn {
-  background-color: #ff7314;
+  background-color: #b570ae;
   color: white;
   transition: all .3s linear;
 }
 
 .orange-btn:hover {
-  background-color: #e05b00;
+  background-color: #9f5398;
 }
 
 .circle {
@@ -264,7 +272,8 @@ header h1 {
 /*********************Projects Section*****************************/
 .projects-section {
   background-image: url("/assets/img/flock-projects.jpg");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: repeat-x;
   background-position: top;
   color: #333;
 }
@@ -308,7 +317,7 @@ header h1 {
 
 .projects {
   margin: 1rem;
-  flex-basis: 40%;
+  flex-basis: 30%;
   text-align: center;
 }
 

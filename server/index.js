@@ -9,7 +9,7 @@ require('./db/mlab-config');
 
 var emailRoutes = require('./routes/email')
 
-var whitelist = ['http://localhost:8080', 'https://lambchopps.herokuapp.com/'] // CHANGE FOR HEROKU
+var whitelist = ['http://localhost:8080', 'https://lambchopps.herokuapp.com/', 'https://michaellambs.github.io'] // CHANGE FOR HEROKU
 
 var corsOptions = {
     origin: function(origin, callback) {

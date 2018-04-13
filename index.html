@@ -94,27 +94,27 @@
                                 <h4 class="teal">Fun Facts</h4>
                                 <div id="hob-info"></div>
                                 <div class="hobby-holder" id="spanish">
-                                    <div onclick="showDeets(1)" class="hobbies pointer">
+                                    <div onclick="app.controllers.mainCtrl.showDeets(1)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-spanish.png">
                                         <h5>Spanish</h5>
                                     </div>
-                                    <div onclick="showDeets(2)" class="hobbies pointer">
+                                    <div onclick="app.controllers.mainCtrl.showDeets(2)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-beaver-football.png">
                                         <h5>Pac-12 Football</h5>
                                     </div>
-                                    <div onclick="showDeets(3)" class="hobbies pointer">
+                                    <div onclick="app.controllers.mainCtrl.showDeets(3)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-tap-dance.png">
                                         <h5>Tap Dancing</h5>
                                     </div>
-                                    <div onclick="showDeets(4)" class="hobbies pointer">
+                                    <div onclick="app.controllers.mainCtrl.showDeets(4)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-travel.png">
                                         <h5>Traveling</h5>
                                     </div>
-                                    <div onclick="showDeets(5)" class="hobbies pointer">
+                                    <div onclick="app.controllers.mainCtrl.showDeets(5)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-volunteer.png">
                                         <h5>Volunteer</h5>
                                     </div>
-                                    <div onclick="showDeets(6)" class="hobbies pointer">
+                                    <div onclick="app.controllers.mainCtrl.showDeets(6)" class="hobbies pointer">
                                         <img class="hobby-images" src="/assets/img/michael-lamb-favorite-song.png">
                                         <h5>Rocket Man</h5>
                                     </div>
@@ -299,18 +299,18 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6 col-sm-8 col-10">
                         <h1 id="contacto">Hit em up!</h1>
-                        <form>
+                        <form onsubmit="app.controllers.mainCtrl.sendEmail(event)">
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Name:</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Luke Skywalker">
+                                <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Luke Skywalker">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Email Address:</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="luke@jedi.com">
+                                <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="luke@jedi.com">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Intrested In:</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
+                                <select name="msgType" class="form-control" id="exampleFormControlSelect1">
                                     <option>Development Work</option>
                                     <option>Design Work</option>
                                     <option>Just wanna say hey</option>
@@ -318,10 +318,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Short Description:</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="The force is strong with this one..." rows="3"></textarea>
+                                <textarea class="form-control" type="text" name="body" id="exampleFormControlTextarea1" placeholder="The force is strong with this one..." rows="3"></textarea>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-success btn-lg">
+                                <button type="submit" class="btn btn-success btn-lg">
                                     <i class="far fa-envelope pad-r"></i>Hola Amigo!
                                 </button>
                             </div>
@@ -338,7 +338,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="footy-pad text-center">
-                            <h5>Handmade from Wool by Michael Lamb</h5>
+                            <h5>Handmade from <b>Wool</b> by Michael Lamb</h5>
                         </div>
                     </div>
                 </div>
@@ -346,7 +346,10 @@
         </div>
     </footer>
 
-    <script src="./app/app.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/app/main-service.js"></script>
+    <script src="app/main-controller.js"></script>
+    <script src="app/app.js"></script>
 </body>
 
 </html>

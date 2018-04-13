@@ -272,10 +272,11 @@ header h1 {
 /*********************Projects Section*****************************/
 .projects-section {
   background-image: url("/assets/img/flock-projects.jpg");
-  background-size: contain;
+  background-size: auto;
   background-repeat: repeat-x;
   background-position: top;
   color: #333;
+  background-color: #eee;
 }
 
 .project-info p {

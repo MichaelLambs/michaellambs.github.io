@@ -1,0 +1,26 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "node server/index.js" // tells heroku what files to start
+    },
+    "author": "Mike Lamb",
+    "license": "ISC",
+    "dependencies": {
+      "body-parser": "^1.18.2",
+      "cors": "^2.8.4",
+      "express": "^4.16.3",
+      "express-session": "^1.15.6",
+      "mongoose": "^5.0.13",
+      "nodemailer": "^4.6.4"
+    },
+    "engines": { // for heroku
+        "node": "^8.0.0",
+        "npm": "^5.0.0"
+      }
+  }
+
+  // this is needed for heroku to know what to build
+  

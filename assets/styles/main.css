@@ -147,11 +147,14 @@ header h1 {
 .orange-btn {
   background-color: #b570ae;
   color: white;
+  border: .1rem solid #fff;
   transition: all .3s linear;
 }
 
 .orange-btn:hover {
-  background-color: #9f5398;
+  background-color: #fff;
+  color: #b570ae;
+  border: 0.1rem solid #b570ae;
 }
 
 .circle {
@@ -274,7 +277,7 @@ header h1 {
   background-image: url("/assets/img/flock-projects.jpg");
   background-size: auto;
   background-repeat: repeat-x;
-  background-position: top;
+  background-position: center top;
   color: #333;
   background-color: #eee;
 }

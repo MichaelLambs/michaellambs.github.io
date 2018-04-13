@@ -125,9 +125,12 @@ header
 .orange-btn
     background-color: $purple
     color: white
+    border: .1rem solid #fff
     transition: all .3s linear
     &:hover
-        background-color: darken($purple, 10)
+        background-color: #fff
+        color: $purple
+        border: .1rem solid $purple
 
 .circle
     border-radius: 100%
@@ -228,7 +231,7 @@ header
     background-image: url('/assets/img/flock-projects.jpg')
     background-size: auto
     background-repeat: repeat-x
-    background-position: top
+    background-position: center top
     // background-attachment: fixed
     color: $black
     background-color: #eee

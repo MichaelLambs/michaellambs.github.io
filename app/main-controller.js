@@ -1,7 +1,8 @@
 function MainController(){
 
     var mainService = new MainService();
-    
+    var successMessage = document.getElementById('successLabel')
+    var successGifer = document.getElementById('successGif')
     var injectorElem = document.getElementById('hob-info')
     var template = '';
     
@@ -24,6 +25,16 @@ function MainController(){
         injectorElem.innerHTML = template
     }
 
+    function displayMessage(str){
+        if(str == 'Success'){
+            successMessage.innerHTML = `Success`
+            successGifer.innerHTML = `<img src="./assets/img/checkmark.gif" height="150">`
+            $('#successModal').modal('show')
+        } else{
+            successMessage.innerHTML = `Error Please Try Again`
+            $('#successModal').modal('show')
+        }
+    }
 
     this.sendEmail = function sendEmail(event){
         event.preventDefault();
@@ -33,7 +44,7 @@ function MainController(){
             body: event.target.body.value,
             msgType: event.target.msgType.value
         }
-        mainService.sendEmail(emailBody);
+        mainService.sendEmail(emailBody, displayMessage);
 
         event.target.name.value = ""
         event.target.email.value = ""

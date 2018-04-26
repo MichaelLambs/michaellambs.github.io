@@ -358,6 +358,10 @@ header h1 {
   font-family: "Rajdhani", sans-serif;
 }
 
+.centa {
+  text-align: center;
+}
+
 /*******************Footer****************************/
 .footy {
   background-size: cover;

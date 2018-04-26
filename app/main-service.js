@@ -8,11 +8,15 @@ function MainService() {
         baseURL: herokuURL
     });
 
-    this.sendEmail = function sendEmail(formData) {
+    this.sendEmail = function sendEmail(formData, displayMessage) {
         emailServer.post('email', formData)
-            .then(res => {})
+            .then(res => {
+                displayMessage('Success')
+                console.log("Success")
+            })
             .catch(err => {
-                console.log("email didn't work")
+                displayMessage('Error')
+                console.log("Error")
             })
     }
 

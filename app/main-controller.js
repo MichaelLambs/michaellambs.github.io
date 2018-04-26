@@ -35,7 +35,7 @@ function MainController(){
             successGifer.innerHTML = `<img src="./assets/img/checkmark.gif" height="150">`
         } else{
             successMessage.innerHTML = `Error Please Try Again`
-            successGifer.innerHTML = ``
+            successGifer.innerHTML = `<p>You can also email me at <b>503lamb@gmail.com</b></p>`
         }
     }
 

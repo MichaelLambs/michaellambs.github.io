@@ -24,15 +24,18 @@ function MainController(){
         
         injectorElem.innerHTML = template
     }
+    function waiting() {
+        successGifer.innerHTML = `<img src="./assets/img/waiting.gif" height="150">`
+        $('#successModal').modal('show')
+    }
 
     function displayMessage(str){
         if(str == 'Success'){
             successMessage.innerHTML = `Success`
             successGifer.innerHTML = `<img src="./assets/img/checkmark.gif" height="150">`
-            $('#successModal').modal('show')
         } else{
             successMessage.innerHTML = `Error Please Try Again`
-            $('#successModal').modal('show')
+            successGifer.innerHTML = ``
         }
     }
 
@@ -45,6 +48,7 @@ function MainController(){
             msgType: event.target.msgType.value
         }
         mainService.sendEmail(emailBody, displayMessage);
+        waiting();
 
         event.target.name.value = ""
         event.target.email.value = ""

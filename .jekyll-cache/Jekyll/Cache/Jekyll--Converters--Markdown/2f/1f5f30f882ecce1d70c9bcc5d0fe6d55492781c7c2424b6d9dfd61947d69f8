@@ -1,0 +1,7 @@
+I"ð<h2 id="code">Code:</h2>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">convert_pdf_to_jpg</span>
+  <span class="n">uuid</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="p">.</span><span class="nf">uuid</span>
+  <span class="n">converted_name</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">file_name</span><span class="p">.</span><span class="nf">chomp</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">extname</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">file</span><span class="p">.</span><span class="nf">current_path</span><span class="p">))</span> <span class="o">+</span> <span class="s1">'.jpg'</span>
+  <span class="n">converted_file_path</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/tmp/</span><span class="si">#{</span><span class="n">converted_name</span><span class="si">}</span><span class="s2">"</span></code></pre></figure>
+:ET

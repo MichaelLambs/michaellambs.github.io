@@ -1,0 +1,336 @@
+/*******************Helpers*******************/
+
+$white: #f1f1f1
+$orange: #ff7314
+$blue: #6caedf
+$purple: #b570ae
+$teal: #65949c
+$black: #333
+
+$font-headings: 'Rajdhani', sans-serif
+$font-p: 'Ovo', serif;
+
+a
+    text-decoration: none
+    color: white
+    &:hover
+        text-decoration: none
+
+li
+    & a
+        color: $orange
+            
+.smaller
+    font-size: .8rem
+    text-align: right
+    padding-top: .5rem
+
+.highlight
+    background-color: #fffbcc
+    border-left: solid #d1cc96 8px
+    padding: .6rem
+    font-size: .9rem
+    text-align: left
+    margin: 0 .5rem
+    & p
+        margin-bottom: 0
+
+.pointer
+    cursor: pointer    
+
+.pad-r
+    padding-right: .5rem
+
+h1
+    font-family: $font-headings
+    font-size: 2.5em
+    
+h2
+    font-family: $font-headings
+    font-size: 2.5em
+h3
+    font-family: $font-headings
+    font-size: 2em    
+h4
+    font-family: $font-headings
+    font-size: 1.5em 
+h5
+    font-family: $font-headings
+    font-size: 1em
+
+p
+    font-family: $font-p
+    font-size: 1.1rem
+
+li
+    font-size: 1.1rem
+
+body
+    font-family: $font-p
+    size: 1rem
+
+.orange-img
+    height: 5rem
+    width: 5rem
+    display: inherit
+    padding-left: .25rem;
+
+/*******************Top Section*******************/
+
+header
+    height: 100vh
+    background: url('/assets/img/cover-image-4.jpg') center center
+    background-size: cover
+    color: $white
+    & h1
+        font-family: $font-headings
+        font-size: 4em
+        font-weight: 700
+
+.shade
+    /*background-color: rgba(28, 28, 28, 0.57)*/
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    position: absolute
+    display: flex
+    align-items: flex-end
+    /*background: url('/assets/img/bg-pattern-4.png') center center*/
+    
+.intro-box
+    padding-bottom: 2rem
+    & h1
+        margin-bottom: 0
+
+.header-icons
+    display: flex
+    justify-content: space-between
+    font-size: 1.5rem
+    & a
+        color: $orange
+    & a:hover
+        color: lighten($orange, 20)
+
+/********************Main Section************************/
+
+.main-section
+    padding: 5rem 0
+    color: $black
+
+.flexor-2
+    display: flex
+    align-items: center
+
+.orange-btn
+    background-color: $purple
+    color: white
+    border: .1rem solid #fff
+    transition: all .3s linear
+    &:hover
+        background-color: #fff
+        color: $purple
+        border: .1rem solid $purple
+
+.circle
+    border-radius: 100%
+    height: 125px
+    width: 125px
+    margin: 1rem auto .5rem auto
+
+.education-chunk
+    border-bottom: 5px solid $orange
+
+.education-highlight
+    border-bottom: 10px solid $orange
+    margin-bottom: 1rem
+
+.arrow
+  width: 0 
+  height: 0
+  border-left: 2rem solid transparent
+  border-right: 2rem solid transparent
+  margin: auto
+  margin-bottom: 2rem
+
+.orange
+    border-top: 1rem solid $orange
+
+.blue
+    border-top: 1rem solid $blue
+
+.wrk-history-chunk
+    border-bottom: 5px solid $blue
+
+.work-highlight
+    border-bottom: 10px solid $blue
+    margin-bottom: 1rem
+
+.teal
+    border-bottom: 5px solid $black
+    margin-bottom: 1rem
+
+.hobby-holder
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+
+#hob-info
+    transition: all .3s linear
+
+.hobbies
+    margin: .25rem
+    flex-basis: 40%
+    
+.hobby-images
+    transition: all .3s linear
+    width: 3.5rem
+    height: 3.5rem
+    border-radius: 10px
+    padding: .5rem
+    background-color: $black
+    &:hover
+        background-color: $orange
+
+/********************Skills Box********************/
+
+.skills-section
+    background-image: url('/assets/img/circles-pattern-d.png')
+    color: $orange
+    & h1
+        font-family: $font-headings
+        font-size: 3em
+
+.card-body
+    padding: .5rem
+
+.skills-holder
+    display: flex
+    padding: 5rem 5rem
+    justify-content: center
+    align-items: center
+
+.skills-title
+    margin-right: 3rem
+    flex-basis: 60%
+    text-align: center
+
+.skills-box
+    font-size: 5rem
+    flex-basis: 40%
+    text-align: center
+
+.flexor
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+
+/*********************Projects Section*****************************/
+
+.projects-section
+    background-image: url('/assets/img/flock-projects.jpg')
+    background-size: auto
+    background-repeat: repeat-x
+    background-position: center top
+    // background-attachment: fixed
+    color: $black
+    background-color: #eee
+
+.project-info
+    & p
+        margin-bottom: 0
+
+.projects-holder
+    padding: 5rem 2rem
+    & h1
+        font-size: 3em
+
+.projects-title
+    text-align: center
+    padding-bottom: 1em
+
+.projects-box
+    display: flex
+    justify-content: space-around
+    flex-wrap: wrap
+    & h4
+        font-size: 1.75rem
+        font-weight: 700
+    & a
+        font-weight: 700
+        color: $orange
+        &:hover
+            color: darken($orange, 10)
+
+.projects
+    margin: 1rem
+    flex-basis: 30%
+    text-align: center
+    & p
+        text-align: left
+
+.purp-shadow
+    box-shadow: 0 0 21px 1px #b8b8b8
+    margin-bottom: 1rem
+
+/********************Contact Section********************/
+   
+.contact-section
+    color: $black
+
+.contact-shade
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    background: url('/assets/img/circles-pattern.png') center center
+    padding: 2rem 0
+    
+#contacto
+    text-align: center
+    font-size: 3em
+
+.form-group
+    & label
+        font-weight: 700
+        font-family: $font-headings
+
+.centa
+    text-align: center
+
+/*******************Footer****************************/
+
+.footy
+    
+    background-size: cover
+
+.footy-pad
+    padding: 2rem 0
+
+/********************Media Queries********************/
+
+@media screen and (max-width: 720px)
+    &.skills-holder
+        flex-direction: column
+        padding: 5rem 1rem
+
+    &.skills-title
+        flex-basis: 30%
+        margin-right: 0
+    
+    &.skills-box
+        flex-basis: 70%
+
+@media screen and (max-width: 576px)
+    .left-sidebar
+        padding-bottom: 3rem
+
+    .hobbies
+        flex-basis: 10%
+
+    .sidebar-navi
+        margin: 0 4em
+
+    header h1
+        font-size: 3.25em
+    

@@ -1,0 +1,71 @@
+I"\#<h2 id="problem">Problem</h2>
+<p>I was assigned the task of allowing a user to upload a PDF then set that PDF as a background image via css.</p>
+
+<p>Obviously we cannot set the PDF as a background image so I needed to do some converting.</p>
+
+<p>After converting the file, it needed to be uploaded to our S3 Bucket for future use.</p>
+
+<p>We are already using the <a href="https://github.com/minimagick/minimagick">MiniMagick</a> gem and it comes with this functionality.</p>
+
+<p>But it took a chunk of time searching for a solution. So I decided to write up my own hoping that it will help someone in the future.</p>
+
+<h2 id="code">Code:</h2>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">convert_pdf_to_jpg</span>
+  <span class="n">uuid</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="p">.</span><span class="nf">uuid</span>
+  <span class="n">converted_name</span> <span class="o">=</span> <span class="n">pdf_file_name</span><span class="p">.</span><span class="nf">chomp</span><span class="p">(</span><span class="s1">'.pdf'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.jpg'</span>
+  <span class="n">tmp_file_path</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/tmp/</span><span class="si">#{</span><span class="n">converted_name</span><span class="si">}</span><span class="s2">"</span>
+
+  <span class="n">pdf</span> <span class="o">=</span> <span class="no">MiniMagick</span><span class="o">::</span><span class="no">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">s3_bucket_url</span><span class="p">)</span>
+
+  <span class="no">MiniMagick</span><span class="o">::</span><span class="no">Tool</span><span class="o">::</span><span class="no">Convert</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">convert</span><span class="o">|</span>
+    <span class="n">convert</span> <span class="o">&lt;&lt;</span> <span class="n">pdf</span><span class="p">.</span><span class="nf">pages</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">path</span> <span class="c1"># grabs only the first page</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">background</span> <span class="s2">"white"</span>
+    <span class="c1"># convert.rotate(90) if pdf.height &gt; pdf.width</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">flatten</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">density</span> <span class="mi">150</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">quality</span> <span class="mi">100</span>
+    <span class="n">convert</span> <span class="o">&lt;&lt;</span> <span class="n">tmp_file_path</span> <span class="c1"># converts and writes the new file</span>
+  <span class="k">end</span>
+
+  <span class="n">new_attachment</span> <span class="o">=</span> <span class="no">Attachment</span><span class="o">::</span><span class="no">Photo</span><span class="p">.</span><span class="nf">create</span> <span class="nb">self</span><span class="p">.</span><span class="nf">attributes</span><span class="p">.</span><span class="nf">except</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"uuid"</span><span class="p">)</span>
+  <span class="n">new_attachment</span><span class="p">.</span><span class="nf">file</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">tmp_file_path</span><span class="p">)</span> <span class="c1"># stages the file upload to s3</span>
+  <span class="n">new_attachment</span><span class="p">.</span><span class="nf">file_key</span> <span class="o">=</span> <span class="s2">"uploads/attachment/photo/</span><span class="si">#{</span><span class="n">uuid</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">converted_name</span><span class="si">}</span><span class="s2">"</span> <span class="c1"># this sets the correct path on s3</span>
+
+  <span class="k">if</span> <span class="n">new_attachment</span><span class="p">.</span><span class="nf">save</span> <span class="c1"># on save toggles the push to s3</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">attachable</span><span class="p">.</span><span class="nf">update_columns</span><span class="p">(</span><span class="ss">width: </span><span class="n">pdf</span><span class="p">.</span><span class="nf">width</span><span class="p">,</span> <span class="ss">height: </span><span class="n">pdf</span><span class="p">.</span><span class="nf">height</span><span class="p">)</span>
+    <span class="no">File</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">tmp_file_path</span><span class="p">)</span> <span class="c1"># delete the temp file after pushed up.</span>
+  <span class="k">end</span>
+
+<span class="k">end</span></code></pre></figure>
+
+<h2 id="explanation">Explanation:</h2>
+<p>The first thing you’ll need to do is get the convert the name of the file from <code class="highlighter-rouge">file_name.pdf</code> to <code class="highlighter-rouge">file_name.jpg</code>. There are many ways to pull this off. But above I am using a <code class="highlighter-rouge">chomp</code> that removes the <code class="highlighter-rouge">'.pdf'</code> from the file_name string and adds the extension <code class="highlighter-rouge">'.jpg'</code> to the end.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="s1">'file_name.pdf'</span><span class="p">.</span><span class="nf">chomp</span><span class="p">(</span><span class="s1">'.pdf'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.jpg'</span> <span class="c1">#=&gt; 'file_name.jpg'</span></code></pre></figure>
+
+<p>Or you can name it whatever you like as long as it ends in <code class="highlighter-rouge">'.jpg'</code>.</p>
+
+<p>Then next thing is that you’ll want to define a temporary file path. This is where you’ll save the converted image before uploading it.</p>
+
+<p>Using <code class="highlighter-rouge">MiniMagick:;Image.open()</code> you can open the existing PDF file from an external url. For me this was an S3 url.</p>
+
+<p>Now that you have the PDF, we can do some converting!</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="no">MiniMagick</span><span class="o">::</span><span class="no">Tool</span><span class="o">::</span><span class="no">Convert</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">convert</span><span class="o">|</span>
+    <span class="n">convert</span> <span class="o">&lt;&lt;</span> <span class="n">pdf</span><span class="p">.</span><span class="nf">pages</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">path</span> <span class="c1"># grabs only the first page</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">background</span> <span class="s2">"white"</span>
+    <span class="c1"># convert.rotate(90) if pdf.height &gt; pdf.width</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">flatten</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">density</span> <span class="mi">150</span>
+    <span class="n">convert</span><span class="p">.</span><span class="nf">quality</span> <span class="mi">100</span>
+    <span class="n">convert</span> <span class="o">&lt;&lt;</span> <span class="n">tmp_file_path</span> <span class="c1"># converts and writes the new file</span>
+  <span class="k">end</span></code></pre></figure>
+
+<p>The most important lines are first <code class="highlighter-rouge">convert &lt;&lt; pdf.pages.first.path</code> and last <code class="highlighter-rouge">convert &lt;&lt; tmp_file_path</code>.</p>
+
+<p><code class="highlighter-rouge">convert &lt;&lt; pdf.pages.first.path</code> grabs the first page of the PDF. <a href="https://github.com/minimagick/minimagick/issues/288#issuecomment-75072516">You can loop through and create a JPG of every page</a>. But that is out of this scope since I was looking for a single image for a background.</p>
+
+<p><code class="highlighter-rouge">convert &lt;&lt; tmp_file_path</code> is the line that writes the converted file to the <code class="highlighter-rouge">tmp_file_path</code> previously set. This is the line that actually writes/saves the converted file. It took me a long while to figure that out…</p>
+
+:ET

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-05T10:10:16-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Michael Lamb - Software Developer Who Can Make A Mean Baguette</title><subtitle>Fullstack Ruby on Rails and React Native developer with a graphic design background based in Boise, Idaho.</subtitle><entry><title type="html">Convert The First Page of a PDF into JPG with MiniMagick</title><link href="http://localhost:4000/convert-pdf-to-jpg-minimagick-carrierwave" rel="alternate" type="text/html" title="Convert The First Page of a PDF into JPG with MiniMagick" /><published>2020-07-04T17:41:19-06:00</published><updated>2020-07-04T17:41:19-06:00</updated><id>http://localhost:4000/convert-pdf-to-jpg-minimagick-carrierwave</id><content type="html" xml:base="http://localhost:4000/convert-pdf-to-jpg-minimagick-carrierwave">&lt;h2 id=&quot;problem&quot;&gt;Problem:&lt;/h2&gt;
+&lt;p&gt;I was assigned the task of allowing a user to upload a PDF then set that PDF as a background image via css.&lt;/p&gt;
+
+&lt;p&gt;Obviously we cannot set the PDF as a background image so I needed to do some converting.&lt;/p&gt;
+
+&lt;p&gt;After converting the file, it needed to be uploaded to our S3 Bucket for future use.&lt;/p&gt;
+
+&lt;p&gt;We are already using the &lt;a href=&quot;https://github.com/minimagick/minimagick&quot; target=&quot;_blank&quot;&gt;MiniMagick&lt;/a&gt; gem and it comes with this functionality.&lt;/p&gt;
+
+&lt;p&gt;But it took a chunk of time searching for a solution. So I decided to write up my own hoping that it will help someone in the future.&lt;/p&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code:&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;convert_pdf_to_jpg&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;uuid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SecureRandom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;uuid&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;converted_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf_file_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;chomp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'.pdf'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.jpg'&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;tmp_file_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/tmp/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;converted_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MiniMagick&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;your_s3_bucket_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;no&quot;&gt;MiniMagick&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Tool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# grabs only the first page&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;background&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;white&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;flatten&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;density&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;150&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;quality&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmp_file_path&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# converts and writes the new file&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;new_attachment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SomeModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;new_attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;new_attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;file_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;uploads/attachment/photo/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uuid&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;converted_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# this sets the correct path on s3&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;new_attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;
+
+  &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# delete the temp file after pushed up.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;explanation&quot;&gt;Explanation:&lt;/h2&gt;
+&lt;p&gt;The first thing you’ll need to do is get the convert the name of the file from &lt;code class=&quot;highlighter-rouge&quot;&gt;file_name.pdf&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;file_name.jpg&lt;/code&gt;. There are many ways to pull this off. But above I am using a &lt;code class=&quot;highlighter-rouge&quot;&gt;chomp&lt;/code&gt; that removes the &lt;code class=&quot;highlighter-rouge&quot;&gt;'.pdf'&lt;/code&gt; from the file_name string and adds the extension &lt;code class=&quot;highlighter-rouge&quot;&gt;'.jpg'&lt;/code&gt; to the end.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;s1&quot;&gt;'file_name.pdf'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;chomp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'.pdf'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.jpg'&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# = 'file_name.jpg'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Or you can name it whatever you like as long as it ends in &lt;code class=&quot;highlighter-rouge&quot;&gt;'.jpg'&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then next thing is that you’ll want to define a temporary file path. This is where you’ll save the converted image before uploading it.&lt;/p&gt;
+
+&lt;p&gt;Using &lt;code class=&quot;highlighter-rouge&quot;&gt;MiniMagick::Image.open()&lt;/code&gt; you can open the existing PDF file from an external url. For me this was an S3 url.&lt;/p&gt;
+
+&lt;p&gt;Now that you have the PDF, we can do some converting!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;  &lt;span class=&quot;no&quot;&gt;MiniMagick&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Tool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# grabs only the first page&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;background&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;white&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;flatten&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;density&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;150&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;quality&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmp_file_path&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# converts and writes the new file&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The most important lines are first &lt;code class=&quot;highlighter-rouge&quot;&gt;convert &amp;lt;&amp;lt; pdf.pages.first.path&lt;/code&gt; and last &lt;code class=&quot;highlighter-rouge&quot;&gt;convert &amp;lt;&amp;lt; tmp_file_path&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;convert &amp;lt;&amp;lt; pdf.pages.first.path&lt;/code&gt; grabs the first page of the PDF. &lt;a href=&quot;https://github.com/minimagick/minimagick/issues/288#issuecomment-75072516&quot; target=&quot;_blank&quot;&gt;You can loop through and create a JPG for every page&lt;/a&gt;. But that is out of this scope since I was looking for a single image for a background.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;convert &amp;lt;&amp;lt; tmp_file_path&lt;/code&gt; is the line that writes the converted file to the &lt;code class=&quot;highlighter-rouge&quot;&gt;tmp_file_path&lt;/code&gt; previously set. This is the line that actually writes/saves the converted file. It took me a long while to figure that out…&lt;/p&gt;
+
+&lt;p&gt;And in-between those two commands there are a lot of &lt;code class=&quot;highlighter-rouge&quot;&gt;convert.&lt;/code&gt; &lt;a href=&quot;https://imagemagick.org/script/convert.php&quot; target=&quot;_blank&quot;&gt;options&lt;/a&gt; that you can use.&lt;/p&gt;
+
+&lt;p&gt;Now we have the converted file at the variable &lt;code class=&quot;highlighter-rouge&quot;&gt;tmp_file_path&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can do whatever you like. &lt;code class=&quot;highlighter-rouge&quot;&gt;File.open(tmp_file_path)&lt;/code&gt; will open the file to save onto your model. Then set a &lt;code class=&quot;highlighter-rouge&quot;&gt;file_key&lt;/code&gt; for your correct S3 location.&lt;/p&gt;
+
+&lt;p&gt;The final step is after you have pushed the file up or done something with it. Make sure to delete the temp file. Since we do not want to keep duplicates.&lt;/p&gt;
+
+&lt;p&gt;You do this by calling &lt;code class=&quot;highlighter-rouge&quot;&gt;File.delete(tmp_file_path)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion:&lt;/h2&gt;
+&lt;p&gt;I hope this helped you on your path of converting a PDF to JPG.&lt;/p&gt;
+
+&lt;p&gt;And honestly it can also be converted into a PNG, by simply changing the file extension from &lt;code class=&quot;highlighter-rouge&quot;&gt;'.jpg'&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;'.png'&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you know of a better way, please let me know!&lt;/p&gt;
+
+&lt;p&gt;Michael&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
+&lt;p&gt;The many links I used to solve this problem.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/minimagick/minimagick&quot; target=&quot;_blank&quot;&gt;https://github.com/minimagick/minimagick&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://imagemagick.org/script/convert.php&quot; target=&quot;_blank&quot;&gt;https://imagemagick.org/script/convert.php&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://groups.google.com/forum/#!topic/ruby-shrine/wMNnOs6SxLY&quot; target=&quot;_blank&quot;&gt;https://groups.google.com/forum/#!topic/ruby-shrine/wMNnOs6SxLY&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/minimagick/minimagick/issues/288&quot; target=&quot;_blank&quot;&gt;https://github.com/minimagick/minimagick/issues/288&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/16772471/carrierwave-pdf-only-choose-the-first-page&quot; target=&quot;_blank&quot;&gt;https://stackoverflow.com/questions/16772471/carrierwave-pdf-only-choose-the-first-page&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/carrierwaveuploader/carrierwave/pull/691&quot; target=&quot;_blank&quot;&gt;https://github.com/carrierwaveuploader/carrierwave/pull/691&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/@pk60905/use-carrierwave-to-upload-files-to-s3-81ce79c29b6d&quot; target=&quot;_blank&quot;&gt;https://medium.com/@pk60905/use-carrierwave-to-upload-files-to-s3-81ce79c29b6d&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Michael</name></author><summary type="html">Problem: I was assigned the task of allowing a user to upload a PDF then set that PDF as a background image via css.</summary></entry><entry><title type="html">Persist Trix Editor in afterReflex() Using StimulusReflex.</title><link href="http://localhost:4000/using-trix-editor-with-stimulusreflex" rel="alternate" type="text/html" title="Persist Trix Editor in afterReflex() Using StimulusReflex." /><published>2020-06-27T17:41:19-06:00</published><updated>2020-06-27T17:41:19-06:00</updated><id>http://localhost:4000/using-trix-editor-with-stimulusreflex</id><content type="html" xml:base="http://localhost:4000/using-trix-editor-with-stimulusreflex">&lt;p&gt;I have a view that is utilizing both &lt;a href=&quot;https://stimulusjs.org/&quot;&gt;StimulusJS&lt;/a&gt;, &lt;a href=&quot;https://docs.stimulusreflex.com/&quot;&gt;Stimulus Reflex&lt;/a&gt;, and a &lt;a href=&quot;https://trix-editor.org/&quot;&gt;Trix Editor&lt;/a&gt;. After a reflex the page is updating but it is not persisting the existing content inside the Trix Editor.&lt;/p&gt;
+
+&lt;p&gt;And sometimes, the reflex causes the Trix Editor to act in unexpected patterns - not displaying the toolbar or not allowing content to be added.&lt;/p&gt;
+
+&lt;p&gt;Here is my solution to persisting the Trix content, including formatting and uploads, after a StimulusReflex reflex. It was a lot easier than I expected.&lt;/p&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code:&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// posts_controller.js&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./application_controller&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;StimulusReflex&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;stimulus_reflex&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;targets&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;trix_holder&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;StimulusReflex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;beforeReflex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trixHtml&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trix_holderTarget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;innerHTML&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;afterReflex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trix_holderTarget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;innerHTML&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trixHtml&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-haml&quot; data-lang=&quot;haml&quot;&gt;&lt;span class=&quot;c&quot;&gt;-# posts/form.haml
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;simple_form_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;url: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;data: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;controller: &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;posts&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;.btn.btn-success.mb-2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;data: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;reflex: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'click-&amp;gt;PostReflex#some_action'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; Click Here
+  &lt;span class=&quot;nc&quot;&gt;.card-text.mt-3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;data: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;target: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'posts.trix_holder'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rich_text_area&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;class: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'form-control'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;placeholder: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Add post content here.'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;explanation&quot;&gt;Explanation:&lt;/h2&gt;
+&lt;p&gt;For the &lt;code class=&quot;highlighter-rouge&quot;&gt;posts_controller.js&lt;/code&gt;, this is a Stimulus JS controller. And it follows the standard StimulusReflex setup.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;beforeReflex()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;afterReflex()&lt;/code&gt; are hooks in the StimulusReflex package that allow us to tie in right before and after a reflex takes place. Normally this is used for a spinner or loading ui.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;beforeReflex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trixHtml&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trix_holderTarget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;innerHTML&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This grabs the current innerHTML of the &lt;code class=&quot;highlighter-rouge&quot;&gt;{ data: { target: 'posts.trix_holder' } }&lt;/code&gt;- which is a Stimulus target. This will give us everything that makes up the Trix Editor. Here is an example of what mine looks like in a &lt;code class=&quot;highlighter-rouge&quot;&gt;console.log()&lt;/code&gt;&lt;/p&gt;
+
+&lt;div style=&quot;text-align:center;margin-bottom: 1rem;&quot;&gt;
+  &lt;img src=&quot;/images/stimulusjs/trix-editor-persist-innerHTML-stimulusreflex.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;!-- ![image](/images/stimulusjs/trix-editor-persist-innerHTML-stimulusreflex.png) --&gt;
+
+&lt;p&gt;As you can see - this is a lot. These are all the html elements, including the current value, that makes up the Trix Editor. It also gets passed through as a string - which is exactly what we need.&lt;/p&gt;
+
+&lt;p&gt;We store this information as a Stimulus variable &lt;code class=&quot;highlighter-rouge&quot;&gt;this.trixHtml&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then &lt;code class=&quot;highlighter-rouge&quot;&gt;click-&amp;gt;PostReflex#some_action&lt;/code&gt; is performed.&lt;/p&gt;
+
+&lt;p&gt;Then we access &lt;code class=&quot;highlighter-rouge&quot;&gt;this.trixHtml&lt;/code&gt; in the &lt;code class=&quot;highlighter-rouge&quot;&gt;afterReflex()&lt;/code&gt; and set it to the innerHTML of the &lt;code class=&quot;highlighter-rouge&quot;&gt;this.trix_holderTarget&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;afterReflex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trix_holderTarget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;innerHTML&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trixHtml&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This shoots the raw HTML of the Trix Editor from before the reflex takes place to the same &lt;code class=&quot;highlighter-rouge&quot;&gt;data-target&lt;/code&gt; element after the reflex takes place.&lt;/p&gt;
+
+&lt;p&gt;This swap fixed my issue with Stimulus Reflex action affecting my Trix Editor.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion:&lt;/h2&gt;
+&lt;p&gt;This solution seemed like the easiest in my mind, but there may be other/better ways to pull this off. Leave a comment below with how you pulled off Trix content persisting after a StimuluReflex event.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;trix-change&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;//save @post with ajax&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Another way to pull this off would be to add an &lt;code class=&quot;highlighter-rouge&quot;&gt;addEventListener(‘trix-change’)&lt;/code&gt; event on the Trix Editor and save the posts.content on every change. But that gets messy with non saved objects and validation.I hope you enjoyed this post. There will be more to come.&lt;/p&gt;
+
+&lt;p&gt;Michael&lt;/p&gt;</content><author><name>Michael</name></author><summary type="html">I have a view that is utilizing both StimulusJS, Stimulus Reflex, and a Trix Editor. After a reflex the page is updating but it is not persisting the existing content inside the Trix Editor.</summary></entry></feed>

@@ -1,0 +1,78 @@
+I"5 <p>I have a view that is utilizing both <a href="https://stimulusjs.org/">StimulusJS</a>, <a href="https://docs.stimulusreflex.com/">Stimulus Reflex</a>, and a <a href="https://trix-editor.org/">Trix Editor</a>. After a reflex the page is updating but it is not persisting the existing content inside the Trix Editor.</p>
+
+<p>And sometimes, the reflex causes the Trix Editor to act in unexpected patterns - not displaying the toolbar or not allowing content to be added.</p>
+
+<p>Here is my solution to persisting the Trix content, including formatting and uploads, after a StimulusReflex reflex. It was a lot easier than I expected.</p>
+
+<h2 id="code">Code:</h2>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// posts_controller.js</span>
+<span class="k">import</span> <span class="nx">ApplicationController</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./application_controller</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">StimulusReflex</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">stimulus_reflex</span><span class="dl">'</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="kd">extends</span> <span class="nx">ApplicationController</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">targets</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">trix_holder</span><span class="dl">'</span><span class="p">];</span>
+
+  <span class="nx">connect</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">StimulusReflex</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="nx">beforeReflex</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">trixHtml</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">trix_holderTarget</span><span class="p">.</span><span class="nx">innerHTML</span>
+  <span class="p">}</span>
+
+  <span class="nx">afterReflex</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">trix_holderTarget</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">trixHtml</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-haml" data-lang="haml"><span class="c">-# posts/form.haml
+</span><span class="p">=</span> <span class="n">simple_form_for</span><span class="p">(</span><span class="vi">@post</span><span class="p">,</span> <span class="ss">url: </span><span class="n">post_path</span><span class="p">,</span> <span class="ss">data: </span><span class="p">{</span> <span class="ss">controller: </span><span class="s2">"posts"</span> <span class="p">})</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+  <span class="nc">.btn.btn-success.mb-2</span><span class="p">{</span> <span class="ss">data: </span><span class="p">{</span> <span class="ss">reflex: </span><span class="s1">'click-&gt;PostReflex#some_action'</span> <span class="p">}</span> <span class="p">}</span> Click Here
+  <span class="nc">.card-text.mt-3</span><span class="p">{</span> <span class="ss">data: </span><span class="p">{</span> <span class="ss">target: </span><span class="s1">'posts.trix_holder'</span> <span class="p">}</span> <span class="p">}</span>
+    <span class="p">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">rich_text_area</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">class: </span><span class="s1">'form-control'</span><span class="p">,</span> <span class="ss">placeholder: </span><span class="s1">'Add post content here.'</span></code></pre></figure>
+
+<h2 id="explanation">Explanation:</h2>
+<p>For the <code class="highlighter-rouge">posts_controller.js</code>, this is a Stimulus JS controller. And it follows the standard StimulusReflex setup.</p>
+
+<p><code class="highlighter-rouge">beforeReflex()</code> and <code class="highlighter-rouge">afterReflex()</code> are hooks in the StimulusReflex package that allow us to tie in right before and after a reflex takes place. Normally this is used for a spinner or loading ui.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">beforeReflex</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">trixHtml</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">trix_holderTarget</span><span class="p">.</span><span class="nx">innerHTML</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>This grabs the current innerHTML of the <code class="highlighter-rouge">{ data: { target: 'posts.trix_holder' } }</code>- which is a Stimulus target. This will give us everything that makes up the Trix Editor. Here is an example of what mine looks like in a <code class="highlighter-rouge">console.log()</code></p>
+
+<div style="text-align:center;margin-bottom: 1rem;">
+  <img src="/images/stimulusjs/trix-editor-persist-innerHTML-stimulusreflex.png" />
+</div>
+
+<!-- ![image](/images/stimulusjs/trix-editor-persist-innerHTML-stimulusreflex.png) -->
+
+<p>As you can see - this is a lot. These are all the html elements, including the current value, that makes up the Trix Editor. It also gets passed through as a string - which is exactly what we need.</p>
+
+<p>We store this information as a Stimulus variable <code class="highlighter-rouge">this.trixHtml</code>.</p>
+
+<p>Then <code class="highlighter-rouge">click-&gt;PostReflex#some_action</code> is performed.</p>
+
+<p>Then we access <code class="highlighter-rouge">this.trixHtml</code> in the <code class="highlighter-rouge">afterReflex()</code> and set it to the innerHTML of the <code class="highlighter-rouge">this.trix_holderTarget</code>.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">afterReflex</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">trix_holderTarget</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">trixHtml</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>This shoots the raw HTML of the Trix Editor from before the reflex takes place to the same <code class="highlighter-rouge">data-target</code> element after the reflex takes place.</p>
+
+<p>This swap fixed my issue with Stimulus Reflex action affecting my Trix Editor.</p>
+
+<h2 id="conclusion">Conclusion:</h2>
+<p>This solution seemed like the easiest in my mind, but there may be other/better ways to pull this off. Leave a comment below with how you pulled off Trix content persisting after a StimuluReflex event.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">trix-change</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//save @post with ajax</span>
+<span class="p">})</span></code></pre></figure>
+
+<p>Another way to pull this off would be to add an <code class="highlighter-rouge">addEventListener(‘trix-change’)</code> event on the Trix Editor and save the posts.content on every change. But that gets messy with non saved objects and validation.I hope you enjoyed this post. There will be more to come.</p>
+
+<p>Michael</p>
+:ET

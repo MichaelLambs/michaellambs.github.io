@@ -8,7 +8,8 @@ a:hover {
   text-decoration: none;
 }
 
-li a {
+li a,
+.hobby-holder a {
   color: #ff7314;
 }
 
@@ -261,7 +262,6 @@ header h1 {
 }
 
 .skills-box {
-  font-size: 5rem;
   flex-basis: 40%;
   text-align: center;
 }
@@ -270,6 +270,21 @@ header h1 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.skills-list {
+  column-count: 3;
+  column-gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.1rem;
+  text-align: left;
+}
+
+.skills-list li {
+  margin-bottom: .5rem;
+  break-inside: avoid;
 }
 
 /*********************Projects Section*****************************/
@@ -384,9 +399,15 @@ header h1 {
   .skills-box {
     flex-basis: 70%;
   }
+  .skills-list {
+    column-count: 2;
+  }
 }
 
 @media screen and (max-width: 576px) {
+  .skills-list {
+    column-count: 1;
+  }
   .left-sidebar {
     padding-bottom: 3rem;
   }

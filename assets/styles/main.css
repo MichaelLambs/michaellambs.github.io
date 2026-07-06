@@ -338,6 +338,9 @@ header h1 {
   margin: 1rem;
   flex-basis: 30%;
   text-align: center;
+  background-color: #ffffffce;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .projects p {

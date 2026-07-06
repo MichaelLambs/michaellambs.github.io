@@ -1,4 +1,5 @@
 node_modules/
 email.js
 _site/
+.jekyll-cache/
 .DS_store

@@ -1,3 +1,4 @@
 node_modules/
 email.js
 _site/
+.DS_store
